@@ -4,9 +4,8 @@ hs_err_pid*
 .idea/
 .DS_Store
 
-src/frontend/public/dist/
 *.iml
 src/target/
 node_modules/
-app/public/dist/
+dist/
 
