@@ -3,8 +3,9 @@ import 'babel-polyfill';
 import { polyfill } from 'es6-promise';
 polyfill();
 
+
 const App = () => {
-  return <h1>HEI</h1>
+  return <div>HEI</div>
 };
 
 export default App;

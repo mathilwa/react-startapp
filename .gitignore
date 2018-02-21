@@ -8,5 +8,5 @@ src/frontend/public/dist/
 *.iml
 src/target/
 node_modules/
-public/dist/
+app/public/dist/
 

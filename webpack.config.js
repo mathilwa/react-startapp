@@ -1,16 +1,20 @@
-const WebpackNotifierPlugin = require('webpack-notifier');
+const webpack = require('webpack');
+const path = require('path');
+const merge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 
 module.exports = {
   entry: [
     './app/public/index.js',
-    './app/public/style/main.less',
+    './app/public/style/style.css',
   ],
   output: {
-    path: './app/public/dist',
-    filename: '/app.bundle.js',
+    path: path.resolve(__dirname, 'app/public/dist'),
+    filename: './app.bundle.js',
   },
   module: {
     loaders: [
@@ -19,21 +23,29 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015', 'react'],
+          presets: ['env', 'react'],
         },
       },
       {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader?-url!autoprefixer?browsers=last 2 version!less-loader'),
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          loader: 'css-loader',
+          options: {
+            url: false,
+          },
+        }),
       },
       {
-        test: /\.jpg$/,
+        test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
+        options: {
+          name: '[path][name].[hash].[ext]',
+        },
       },
     ],
   },
   plugins: [
-    new WebpackNotifierPlugin(),
+    new WebpackBuildNotifierPlugin({ sound: false }),
     new HtmlWebpackPlugin({
       template: 'app/public/index.html',
       inject: 'body',
@@ -41,11 +53,11 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: 'app/public/img/',
+        from: path.resolve(__dirname, 'app/public/img/'),
         to: 'img/',
       },
     ]),
-    new ExtractTextPlugin('/main.bundle.css', {
+    new ExtractTextPlugin('style/style.bundle.css', {
       allChunks: true,
     }),
   ],
