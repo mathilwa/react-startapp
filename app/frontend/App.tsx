@@ -1,11 +1,9 @@
 import React from 'react';
 import 'babel-polyfill';
 import { polyfill } from 'es6-promise';
-import Hei from './Hei.jsx';
+import Hei from './Hei';
 polyfill();
 
-const App = () => {
-  return <Hei/>
-};
+const App = () => <Hei />;
 
 export default App;

@@ -16,8 +16,9 @@ module.exports = {
     path: path.resolve(__dirname, 'app/public/dist'),
     filename: './app.bundle.js',
   },
+  mode: 'development',
   module: {
-    loaders: [
+    rules: [
       {
         test: [/\.js$/, /\.jsx$/],
         exclude: /node_modules/,
